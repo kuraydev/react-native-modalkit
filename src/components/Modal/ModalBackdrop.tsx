@@ -1,9 +1,6 @@
 import React, { memo, type ReactNode } from "react";
 import { Pressable, type StyleProp, type ViewStyle } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  type SharedValue,
-} from "react-native-reanimated";
+import Animated, { useAnimatedStyle, type SharedValue } from "react-native-reanimated";
 
 import { modalStyles } from "./Modal.style";
 
@@ -43,8 +40,7 @@ const ModalBackdropComponent: React.FC<ModalBackdropProps> = ({
 
   if (!hasBackdrop) return null;
 
-  const hasCustom =
-    customBackdrop != null && React.isValidElement(customBackdrop);
+  const hasCustom = customBackdrop != null && React.isValidElement(customBackdrop);
 
   if (hasCustom) {
     // Custom backdrop owns its own touch handling.

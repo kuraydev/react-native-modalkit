@@ -30,11 +30,7 @@ export const isDirectionAllowed = (
  * direction. Positive when swiping further, used to compare against
  * `swipeThreshold`.
  */
-export const accumulatedDistance = (
-  direction: Direction,
-  dx: number,
-  dy: number,
-): number => {
+export const accumulatedDistance = (direction: Direction, dx: number, dy: number): number => {
   "worklet";
   switch (direction) {
     case "up":

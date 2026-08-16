@@ -12,13 +12,7 @@ const ConfirmDialog: React.FC<{
   onConfirm: () => void;
   onCancel: () => void;
 }> = ({ options, onConfirm, onCancel }) => {
-  const {
-    title,
-    message,
-    confirmLabel = "Confirm",
-    cancelLabel = "Cancel",
-    destructive,
-  } = options;
+  const { title, message, confirmLabel = "Confirm", cancelLabel = "Cancel", destructive } = options;
 
   return (
     <View style={styles.dialog}>
@@ -34,10 +28,7 @@ const ConfirmDialog: React.FC<{
           <Text style={styles.secondaryText}>{cancelLabel}</Text>
         </Pressable>
         <Pressable
-          style={[
-            styles.button,
-            destructive ? styles.destructive : styles.primary,
-          ]}
+          style={[styles.button, destructive ? styles.destructive : styles.primary]}
           onPress={onConfirm}
           accessibilityRole="button"
           testID="modalkit-confirm-ok"
@@ -78,9 +69,7 @@ const AlertDialog: React.FC<{
  *
  * Requires `<ModalProvider>` mounted at the app root.
  */
-export const confirmDialog = (
-  options: ConfirmDialogOptions,
-): Promise<boolean> =>
+export const confirmDialog = (options: ConfirmDialogOptions): Promise<boolean> =>
   new Promise<boolean>((resolve) => {
     let id = "";
     let result = false;

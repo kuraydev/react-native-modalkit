@@ -45,9 +45,7 @@ class ModalManagerSingleton {
   }
 
   update(id: string, element: ReactElement<ModalProps>): void {
-    this.entries = this.entries.map((e) =>
-      e.id === id ? { ...e, element } : e,
-    );
+    this.entries = this.entries.map((e) => (e.id === id ? { ...e, element } : e));
     this.notify();
   }
 
@@ -57,9 +55,7 @@ class ModalManagerSingleton {
    * `onModalHide` fires (wired up by `<ModalProvider>`).
    */
   hide(id: string): void {
-    this.entries = this.entries.map((e) =>
-      e.id === id ? { ...e, isVisible: false } : e,
-    );
+    this.entries = this.entries.map((e) => (e.id === id ? { ...e, isVisible: false } : e));
     this.notify();
   }
 

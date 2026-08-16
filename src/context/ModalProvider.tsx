@@ -11,9 +11,7 @@ type ModalProviderProps = {
  * top of your app to enable imperative `ModalManager.show(...)` calls.
  */
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
-  const [entries, setEntries] = useState<ManagedModalEntry[]>(() =>
-    ModalManager.getEntries(),
-  );
+  const [entries, setEntries] = useState<ManagedModalEntry[]>(() => ModalManager.getEntries());
 
   useEffect(() => ModalManager.subscribe(setEntries), []);
 

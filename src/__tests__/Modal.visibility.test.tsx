@@ -5,8 +5,8 @@ import { act, render } from "@testing-library/react-native";
 import { Modal } from "../components/Modal/Modal";
 
 describe("Modal — visibility transitions", () => {
-  it("does not render children when initially hidden", () => {
-    const { queryByText } = render(
+  it("does not render children when initially hidden", async () => {
+    const { queryByText } = await render(
       <Modal isVisible={false}>
         <Text>hello</Text>
       </Modal>,
@@ -14,15 +14,15 @@ describe("Modal — visibility transitions", () => {
     expect(queryByText("hello")).toBeNull();
   });
 
-  it("renders children when isVisible becomes true", () => {
-    const { queryByText, rerender } = render(
+  it("renders children when isVisible becomes true", async () => {
+    const { queryByText, rerender } = await render(
       <Modal isVisible={false}>
         <Text>hello</Text>
       </Modal>,
     );
     expect(queryByText("hello")).toBeNull();
 
-    rerender(
+    await rerender(
       <Modal isVisible>
         <Text>hello</Text>
       </Modal>,
@@ -34,23 +34,15 @@ describe("Modal — visibility transitions", () => {
     const onModalWillShow = jest.fn();
     const onModalShow = jest.fn();
 
-    const { rerender } = render(
-      <Modal
-        isVisible={false}
-        onModalWillShow={onModalWillShow}
-        onModalShow={onModalShow}
-      >
+    const { rerender } = await render(
+      <Modal isVisible={false} onModalWillShow={onModalWillShow} onModalShow={onModalShow}>
         <Text>hello</Text>
       </Modal>,
     );
 
     await act(async () => {
-      rerender(
-        <Modal
-          isVisible
-          onModalWillShow={onModalWillShow}
-          onModalShow={onModalShow}
-        >
+      await rerender(
+        <Modal isVisible onModalWillShow={onModalWillShow} onModalShow={onModalShow}>
           <Text>hello</Text>
         </Modal>,
       );
@@ -67,23 +59,15 @@ describe("Modal — visibility transitions", () => {
     const onModalWillHide = jest.fn();
     const onModalHide = jest.fn();
 
-    const { rerender } = render(
-      <Modal
-        isVisible
-        onModalWillHide={onModalWillHide}
-        onModalHide={onModalHide}
-      >
+    const { rerender } = await render(
+      <Modal isVisible onModalWillHide={onModalWillHide} onModalHide={onModalHide}>
         <Text>hello</Text>
       </Modal>,
     );
 
     await act(async () => {
-      rerender(
-        <Modal
-          isVisible={false}
-          onModalWillHide={onModalWillHide}
-          onModalHide={onModalHide}
-        >
+      await rerender(
+        <Modal isVisible={false} onModalWillHide={onModalWillHide} onModalHide={onModalHide}>
           <Text>hello</Text>
         </Modal>,
       );

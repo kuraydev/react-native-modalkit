@@ -7,11 +7,7 @@ export {
   hasCustomAnimation,
   getCustomAnimation,
 } from "./animations/registry";
-export type {
-  AnimationFrame,
-  ResolvedFrames,
-  Dimensions2D,
-} from "./animations/presets";
+export type { AnimationFrame, ResolvedFrames, Dimensions2D } from "./animations/presets";
 export { isPresetName, resolvePreset } from "./animations/presets";
 
 export type {

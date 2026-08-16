@@ -21,7 +21,7 @@ const Harness: React.FC = () => {
 
 describe("Modal — imperative API", () => {
   it("opens via ref.show()", async () => {
-    const { getByTestId, queryByText } = render(<Harness />);
+    const { getByTestId, queryByText } = await render(<Harness />);
     expect(queryByText("imperative-content")).toBeNull();
 
     await act(async () => {
@@ -38,7 +38,7 @@ describe("ModalManager + ModalProvider", () => {
   });
 
   it("renders modals dispatched via ModalManager.show()", async () => {
-    const { queryByText } = render(
+    const { queryByText } = await render(
       <ModalProvider>
         <Text>app</Text>
       </ModalProvider>,
@@ -58,7 +58,7 @@ describe("ModalManager + ModalProvider", () => {
   });
 
   it("removes the modal when hideAll() is called", async () => {
-    const { queryByText } = render(
+    const { queryByText } = await render(
       <ModalProvider>
         <Text>app</Text>
       </ModalProvider>,

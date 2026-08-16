@@ -1,17 +1,8 @@
 import { useMemo } from "react";
 import { Gesture, type GestureType } from "react-native-gesture-handler";
-import {
-  runOnJS,
-  withSpring,
-  withTiming,
-  type SharedValue,
-} from "react-native-reanimated";
+import { runOnJS, withSpring, withTiming, type SharedValue } from "react-native-reanimated";
 
-import type {
-  Direction,
-  OnSwipeCompleteParams,
-  SwipeGestureState,
-} from "./Modal.types";
+import type { Direction, OnSwipeCompleteParams, SwipeGestureState } from "./Modal.types";
 import {
   accumulatedDistance,
   getSwipingDirection,
@@ -29,14 +20,8 @@ export type UseModalGestureParams = {
   dragY: SharedValue<number>;
   swipeOpacityFactor: SharedValue<number>;
   onSwipeStart?: (gestureState: SwipeGestureState) => void;
-  onSwipeMove?: (
-    percentageShown: number,
-    gestureState: SwipeGestureState,
-  ) => void;
-  onSwipeComplete?: (
-    params: OnSwipeCompleteParams,
-    gestureState: SwipeGestureState,
-  ) => void;
+  onSwipeMove?: (percentageShown: number, gestureState: SwipeGestureState) => void;
+  onSwipeComplete?: (params: OnSwipeCompleteParams, gestureState: SwipeGestureState) => void;
   onSwipeCancel?: (gestureState: SwipeGestureState) => void;
 };
 
@@ -66,9 +51,7 @@ const buildGestureState = (
  * shared values. The gesture is responsible for live-tracking the user's
  * finger and reporting completion / cancellation back to JS.
  */
-export const useModalGesture = (
-  params: UseModalGestureParams,
-): GestureType | undefined => {
+export const useModalGesture = (params: UseModalGestureParams): GestureType | undefined => {
   const {
     swipeDirection,
     swipeThreshold,
@@ -89,8 +72,7 @@ export const useModalGesture = (
     if (!enabled || !swipeDirection) return undefined;
 
     const handleStart = (gs: SwipeGestureState) => onSwipeStart?.(gs);
-    const handleMove = (factor: number, gs: SwipeGestureState) =>
-      onSwipeMove?.(factor, gs);
+    const handleMove = (factor: number, gs: SwipeGestureState) => onSwipeMove?.(factor, gs);
     const handleComplete = (direction: Direction, gs: SwipeGestureState) =>
       onSwipeComplete?.({ swipingDirection: direction }, gs);
     const handleCancel = (gs: SwipeGestureState) => onSwipeCancel?.(gs);
@@ -161,11 +143,7 @@ export const useModalGesture = (
           return;
         }
 
-        const distance = accumulatedDistance(
-          direction,
-          e.translationX,
-          e.translationY,
-        );
+        const distance = accumulatedDistance(direction, e.translationX, e.translationY);
 
         if (distance > swipeThreshold) {
           // Trigger close. The component listens to onSwipeComplete to
