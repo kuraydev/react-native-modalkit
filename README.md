@@ -12,12 +12,6 @@
   <img src="./assets/demo.gif" alt="react-native-modalkit demo — sheets, dialogs, and fullscreen modals" width="320" />
 </p>
 
-<p align="center">
-  <img src="./assets/ss1.png" alt="react-native-modalkit screenshot 1" width="280" />
-  &nbsp;
-  <img src="./assets/ss2.png" alt="react-native-modalkit screenshot 2" width="280" />
-</p>
-
 ## 🌟 Highlights
 
 - 🔁 **Drop-in API** — change one import line; `animationIn`, `swipeDirection`, `customBackdrop`, `onModalHide` and friends all keep working
