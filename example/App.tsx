@@ -23,6 +23,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
+import { StatusBar } from "expo-status-bar";
 import Modal, {
   ModalManager,
   ModalProvider,
@@ -45,15 +46,15 @@ registerAnimation("popOutRotated", {
 });
 
 const palette = {
-  bg: "#0A0A0F",
-  surface: "#141419",
-  surfaceBorder: "rgba(255,255,255,0.07)",
+  bg: "#F5F4FB",
+  surface: "#FFFFFF",
+  surfaceBorder: "rgba(20,18,31,0.06)",
   card: "#ffffff",
   text: "#111111",
   muted: "#6b6b76",
   border: "#e6e6ea",
   accent: "#7C5CFF",
-  accentSoft: "rgba(124,92,255,0.16)",
+  accentSoft: "rgba(124,92,255,0.12)",
   destructive: "#e64545",
 };
 
@@ -64,7 +65,7 @@ const Divider: React.FC = () => <View style={styles.divider} />;
 const Section: React.FC<{
   title: string;
   caption?: string;
-  icon?: string;
+  icon?: number;
   index?: number;
   children: React.ReactNode;
 }> = ({ title, caption, icon, index = 0, children }) => (
@@ -74,9 +75,7 @@ const Section: React.FC<{
   >
     <View style={styles.sectionHeader}>
       {icon ? (
-        <View style={styles.sectionIcon}>
-          <Text style={styles.sectionIconText}>{icon}</Text>
-        </View>
+        <Image source={icon} style={styles.sectionIcon} resizeMode="contain" />
       ) : null}
       <View style={styles.sectionHeaderText}>
         <Text style={styles.sectionTitle}>{title}</Text>
@@ -569,7 +568,7 @@ const Demo: React.FC = () => {
         </Text>
       </Animated.View>
 
-      <Section icon="📄" index={0} title="Sheets" caption="Bottom-anchored, swipe-to-dismiss.">
+      <Section icon={require("./assets/icons/sheets.png")} index={0} title="Sheets" caption="Bottom-anchored, swipe-to-dismiss.">
         <Btn label="Sign in" onPress={() => setSignIn(true)} />
         <View style={styles.spacer} />
         <Btn
@@ -587,12 +586,12 @@ const Demo: React.FC = () => {
         <Btn label="Share" tone="secondary" onPress={() => setShare(true)} />
       </Section>
 
-      <Section icon="🖼️" index={1} title="Fullscreen" caption="With a blurred backdrop.">
+      <Section icon={require("./assets/icons/fullscreen.png")} index={1} title="Fullscreen" caption="With a blurred backdrop.">
         <Btn label="Open image preview" onPress={() => setLightbox(true)} />
       </Section>
 
       <Section
-        icon="💬"
+        icon={require("./assets/icons/dialogs.png")}
         index={2}
         title="Dialogs"
         caption="Centered cards with timing or spring entries."
@@ -623,7 +622,7 @@ const Demo: React.FC = () => {
         />
       </Section>
 
-      <Section icon="🏗️" index={3} title="Architectural" caption="Stacked sheets, refs, and the global manager.">
+      <Section icon={require("./assets/icons/architectural.png")} index={3} title="Architectural" caption="Stacked sheets, refs, and the global manager.">
         <Btn
           label="Profile (stacked sheets)"
           onPress={() => setProfile(true)}
@@ -667,7 +666,7 @@ const Demo: React.FC = () => {
         />
       </Section>
 
-      <Section icon="⚙️" index={4} title="Settings">
+      <Section icon={require("./assets/icons/settings.png")} index={4} title="Settings">
         <View style={styles.toggleRow}>
           <Text style={styles.toggleLabel}>Respect reduced motion</Text>
           <Switch value={respectMotion} onValueChange={setRespectMotion} />
@@ -733,6 +732,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={styles.root}>
+        <StatusBar style="dark" />
         <ModalProvider>
           <Demo />
         </ModalProvider>
@@ -764,19 +764,19 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   heroPillText: {
-    color: "#B9A6FF",
+    color: "#6C4DF6",
     fontSize: 10,
     fontWeight: "800",
     letterSpacing: 1.2,
   },
   heading: {
-    color: "#fff",
+    color: "#14121F",
     fontSize: 40,
     fontWeight: "800",
     letterSpacing: -1,
   },
   subheading: {
-    color: "rgba(255,255,255,0.6)",
+    color: "#5D5A6E",
     fontSize: 14,
     lineHeight: 21,
   },
@@ -787,6 +787,10 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 18,
     gap: 14,
+    shadowColor: "#3A2E6E",
+    shadowOpacity: 0.08,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 8 },
   },
   sectionHeader: {
     flexDirection: "row",
@@ -795,23 +799,18 @@ const styles = StyleSheet.create({
   },
   sectionHeaderText: { flex: 1, gap: 2 },
   sectionIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 13,
-    backgroundColor: palette.accentSoft,
-    alignItems: "center",
-    justifyContent: "center",
+    width: 48,
+    height: 48,
   },
-  sectionIconText: { fontSize: 18 },
   sectionBody: { gap: 10 },
   sectionTitle: {
-    color: "rgba(255,255,255,0.92)",
+    color: "#17151F",
     fontSize: 16,
     letterSpacing: 0.2,
     fontWeight: "700",
   },
   sectionCaption: {
-    color: "rgba(255,255,255,0.5)",
+    color: "#6B6879",
     fontSize: 12.5,
     lineHeight: 17,
   },
@@ -846,12 +845,14 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: "center",
     shadowColor: palette.accent,
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.28,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 6 },
   },
   buttonSecondary: {
-    backgroundColor: "#f3f3f6",
+    backgroundColor: "#F3F2F9",
+    borderWidth: 1,
+    borderColor: "rgba(20,18,31,0.06)",
     shadowOpacity: 0,
   },
   buttonDestructive: {
@@ -1144,7 +1145,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   toggleLabel: {
-    color: "#fff",
+    color: "#17151F",
     fontSize: 15,
     fontWeight: "600",
   },
