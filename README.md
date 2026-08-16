@@ -293,4 +293,4 @@ npm run build
 
 ## 📄 License
 
-MIT © [Kuray Ogun](https://github.com/kuraydev)
+MIT © [kuraydev](https://github.com/kuraydev)
