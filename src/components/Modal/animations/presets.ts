@@ -198,19 +198,15 @@ const PRESETS: Record<AnimationPresetName, PresetFn> = {
 export const isPresetName = (name: string): name is AnimationPresetName =>
   Object.prototype.hasOwnProperty.call(PRESETS, name);
 
-export const resolvePreset = (
-  name: AnimationPresetName,
-  dims: Dimensions2D,
-): ResolvedFrames => PRESETS[name](dims);
+export const resolvePreset = (name: AnimationPresetName, dims: Dimensions2D): ResolvedFrames =>
+  PRESETS[name](dims);
 
 /**
  * Mirror animation derived from a swipe direction. Used by the Modal when the
  * user drags the modal off-screen — we want it to continue in the swipe
  * direction regardless of `animationOut`.
  */
-export const swipeOutPresetFor = (
-  direction: "up" | "down" | "left" | "right",
-) => {
+export const swipeOutPresetFor = (direction: "up" | "down" | "left" | "right") => {
   switch (direction) {
     case "up":
       return "slideOutUp" as const;

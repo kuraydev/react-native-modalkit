@@ -17,13 +17,13 @@ describe("Modal — react-native-modal compatibility", () => {
     warnSpy.mockRestore();
   });
 
-  it("warns once when useNativeDriver is passed", () => {
-    render(
+  it("warns once when useNativeDriver is passed", async () => {
+    await render(
       <Modal isVisible useNativeDriver>
         <Text>hello</Text>
       </Modal>,
     );
-    render(
+    await render(
       <Modal isVisible useNativeDriver>
         <Text>hello again</Text>
       </Modal>,
@@ -35,8 +35,8 @@ describe("Modal — react-native-modal compatibility", () => {
     expect(matching.length).toBe(1);
   });
 
-  it("warns once when useNativeDriverForBackdrop is passed", () => {
-    render(
+  it("warns once when useNativeDriverForBackdrop is passed", async () => {
+    await render(
       <Modal isVisible useNativeDriverForBackdrop>
         <Text>hello</Text>
       </Modal>,
@@ -48,26 +48,23 @@ describe("Modal — react-native-modal compatibility", () => {
     expect(matching.length).toBe(1);
   });
 
-  it("accepts string animationIn / animationOut presets", () => {
-    expect(() =>
+  it("accepts string animationIn / animationOut presets", async () => {
+    await expect(
       render(
         <Modal isVisible animationIn="slideInUp" animationOut="slideOutDown">
           <Text>hello</Text>
         </Modal>,
       ),
-    ).not.toThrow();
+    ).resolves.toBeDefined();
   });
 
-  it("accepts CustomKeyframeAnimation objects", () => {
-    expect(() =>
+  it("accepts CustomKeyframeAnimation objects", async () => {
+    await expect(
       render(
-        <Modal
-          isVisible
-          animationIn={{ from: { opacity: 0 }, to: { opacity: 1 } }}
-        >
+        <Modal isVisible animationIn={{ from: { opacity: 0 }, to: { opacity: 1 } }}>
           <Text>hello</Text>
         </Modal>,
       ),
-    ).not.toThrow();
+    ).resolves.toBeDefined();
   });
 });

@@ -1,4 +1,13 @@
 /* eslint-disable */
+jest.mock("react-native-worklets", () => {
+  // Deep stub: every export is callable and every property chain resolves.
+  const anything = new Proxy(function () {}, {
+    get: (_t, prop) => (prop === "__esModule" ? true : anything),
+    apply: () => anything,
+    construct: () => anything,
+  });
+  return new Proxy({}, { get: (_t, prop) => (prop === "__esModule" ? true : anything) });
+});
 require("react-native-gesture-handler/jestSetup");
 
 jest.mock("react-native-reanimated", () => {

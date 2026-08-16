@@ -3,17 +3,8 @@ import type {
   ReanimatedAnimationConfig,
   CustomKeyframeAnimation,
 } from "../Modal.types";
-import {
-  isPresetName,
-  resolvePreset,
-  type ResolvedFrames,
-  type Dimensions2D,
-} from "./presets";
-import {
-  getCustomAnimation,
-  hasCustomAnimation,
-  resolveCustomKeyframeAnimation,
-} from "./registry";
+import { isPresetName, resolvePreset, type ResolvedFrames, type Dimensions2D } from "./presets";
+import { getCustomAnimation, hasCustomAnimation, resolveCustomKeyframeAnimation } from "./registry";
 
 const DEFAULT_FRAMES: ResolvedFrames = {
   from: { opacity: 1 },
@@ -26,14 +17,11 @@ const isCustomKeyframe = (value: unknown): value is CustomKeyframeAnimation =>
   ("from" in value || "to" in value) &&
   !("type" in value);
 
-const isReanimatedConfig = (
-  value: unknown,
-): value is ReanimatedAnimationConfig =>
+const isReanimatedConfig = (value: unknown): value is ReanimatedAnimationConfig =>
   typeof value === "object" &&
   value !== null &&
   "type" in value &&
-  ((value as { type: string }).type === "timing" ||
-    (value as { type: string }).type === "spring");
+  ((value as { type: string }).type === "timing" || (value as { type: string }).type === "spring");
 
 export type ResolvedAnimation = {
   frames: ResolvedFrames;

@@ -8,10 +8,7 @@ import type { ResolvedFrames, Dimensions2D, AnimationFrame } from "./presets";
 
 const customRegistry = new Map<string, CustomKeyframeAnimation>();
 
-export const registerAnimation = (
-  name: string,
-  animation: CustomKeyframeAnimation,
-): void => {
+export const registerAnimation = (name: string, animation: CustomKeyframeAnimation): void => {
   customRegistry.set(name, animation);
 };
 
@@ -19,12 +16,10 @@ export const unregisterAnimation = (name: string): void => {
   customRegistry.delete(name);
 };
 
-export const hasCustomAnimation = (name: string): boolean =>
-  customRegistry.has(name);
+export const hasCustomAnimation = (name: string): boolean => customRegistry.has(name);
 
-export const getCustomAnimation = (
-  name: string,
-): CustomKeyframeAnimation | undefined => customRegistry.get(name);
+export const getCustomAnimation = (name: string): CustomKeyframeAnimation | undefined =>
+  customRegistry.get(name);
 
 const TRANSFORM_KEYS: Array<keyof AnimationFrame> = [
   "translateX",
@@ -35,10 +30,7 @@ const TRANSFORM_KEYS: Array<keyof AnimationFrame> = [
   "rotateY",
 ];
 
-const NUMERIC_KEYS: Array<keyof AnimationFrame> = [
-  "opacity",
-  ...TRANSFORM_KEYS,
-];
+const NUMERIC_KEYS: Array<keyof AnimationFrame> = ["opacity", ...TRANSFORM_KEYS];
 
 const toFrame = (
   obj: Record<string, number | string> | undefined,

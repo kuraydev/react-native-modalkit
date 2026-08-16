@@ -6,6 +6,10 @@
 [![license](https://img.shields.io/npm/l/react-native-modalkit?style=flat-square)](./LICENSE)
 
 <p align="center">
+  <img src="./assets/demo.gif" alt="react-native-modalkit demo — sheets, dialogs, and fullscreen modals" width="320" />
+</p>
+
+<p align="center">
   <img src="./assets/ss1.png" alt="react-native-modalkit screenshot 1" width="280" />
   &nbsp;
   <img src="./assets/ss2.png" alt="react-native-modalkit screenshot 2" width="280" />

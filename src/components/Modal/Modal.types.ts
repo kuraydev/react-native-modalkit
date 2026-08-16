@@ -6,10 +6,7 @@ import type {
   NativeSyntheticEvent,
   NativeTouchEvent,
 } from "react-native";
-import type {
-  WithSpringConfig,
-  WithTimingConfig,
-} from "react-native-reanimated";
+import type { WithSpringConfig, WithTimingConfig } from "react-native-reanimated";
 
 /* ---------------------------- Public utility types ---------------------------- */
 
@@ -24,19 +21,13 @@ export type Orientation =
   | "landscape-left"
   | "landscape-right";
 
-export type PresentationStyle =
-  | "fullScreen"
-  | "pageSheet"
-  | "formSheet"
-  | "overFullScreen";
+export type PresentationStyle = "fullScreen" | "pageSheet" | "formSheet" | "overFullScreen";
 
 export type Position = "center" | "top" | "bottom" | "fullscreen";
 
 export interface GestureResponderEvent extends NativeSyntheticEvent<NativeTouchEvent> {}
 
-export type OnOrientationChange = (
-  orientation: NativeSyntheticEvent<unknown>,
-) => void;
+export type OnOrientationChange = (orientation: NativeSyntheticEvent<unknown>) => void;
 
 export type OnSwipeCompleteParams = {
   swipingDirection: Direction;
@@ -154,25 +145,14 @@ export type ModalProps = ViewProps & {
    */
   propagateSwipe?:
     | boolean
-    | ((
-        event: GestureResponderEvent,
-        gestureState: SwipeGestureState,
-      ) => boolean);
+    | ((event: GestureResponderEvent, gestureState: SwipeGestureState) => boolean);
   onSwipeStart?: (gestureState: SwipeGestureState) => void;
-  onSwipeMove?: (
-    percentageShown: number,
-    gestureState: SwipeGestureState,
-  ) => void;
-  onSwipeComplete?: (
-    params: OnSwipeCompleteParams,
-    gestureState: SwipeGestureState,
-  ) => void;
+  onSwipeMove?: (percentageShown: number, gestureState: SwipeGestureState) => void;
+  onSwipeComplete?: (params: OnSwipeCompleteParams, gestureState: SwipeGestureState) => void;
   onSwipeCancel?: (gestureState: SwipeGestureState) => void;
 
   /* ----- scroll integration (RN-modal compat) ----- */
-  scrollTo?: OrNull<
-    (args: { x?: number; y?: number; animated?: boolean }) => void
-  >;
+  scrollTo?: OrNull<(args: { x?: number; y?: number; animated?: boolean }) => void>;
   scrollOffset?: number;
   scrollOffsetMax?: number;
   scrollHorizontal?: boolean;

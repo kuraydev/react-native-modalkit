@@ -3,7 +3,7 @@ import type { ModalHandle } from "../components/Modal/Modal.types";
 
 export type UseModalReturn = {
   /** Pass to `<Modal ref={...}>` to enable imperative show/hide. */
-  ref: React.RefObject<ModalHandle>;
+  ref: React.RefObject<ModalHandle | null>;
   /** Imperatively open the modal. */
   show: () => void;
   /** Imperatively close the modal. */

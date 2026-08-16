@@ -41,10 +41,7 @@ export type { ManagedModalEntry } from "./manager/ModalManager";
 
 // Promise-based confirm/alert helpers (also attached as ModalManager.confirm/alert)
 export { confirmDialog, alertDialog } from "./manager/dialogs";
-export type {
-  ConfirmDialogOptions,
-  AlertDialogOptions,
-} from "./manager/dialogs";
+export type { ConfirmDialogOptions, AlertDialogOptions } from "./manager/dialogs";
 
 // Animation registry — extension point mirroring animatable.registerAnimation
 export {

@@ -1,0 +1,8 @@
+{
+  "prompts": "prompts",
+  "out": ".",
+  "provider": "openai",
+  "defaultSaveDir": "assets/icons",
+  "rpm": 4,
+  "concurrency": 1
+}

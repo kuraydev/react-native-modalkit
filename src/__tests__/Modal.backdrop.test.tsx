@@ -5,9 +5,9 @@ import { fireEvent, render } from "@testing-library/react-native";
 import { Modal } from "../components/Modal/Modal";
 
 describe("Modal — backdrop", () => {
-  it("invokes onBackdropPress when backdrop is tapped", () => {
+  it("invokes onBackdropPress when backdrop is tapped", async () => {
     const onBackdropPress = jest.fn();
-    const { getByTestId } = render(
+    const { getByTestId } = await render(
       <Modal isVisible onBackdropPress={onBackdropPress}>
         <Text>hello</Text>
       </Modal>,
@@ -17,8 +17,8 @@ describe("Modal — backdrop", () => {
     expect(onBackdropPress).toHaveBeenCalledTimes(1);
   });
 
-  it("renders without backdrop when hasBackdrop is false", () => {
-    const { queryByTestId } = render(
+  it("renders without backdrop when hasBackdrop is false", async () => {
+    const { queryByTestId } = await render(
       <Modal isVisible hasBackdrop={false}>
         <Text>hello</Text>
       </Modal>,
@@ -27,8 +27,8 @@ describe("Modal — backdrop", () => {
     expect(queryByTestId("modalkit-backdrop-visual")).toBeNull();
   });
 
-  it("renders a custom backdrop when provided", () => {
-    const { getByTestId } = render(
+  it("renders a custom backdrop when provided", async () => {
+    const { getByTestId } = await render(
       <Modal isVisible customBackdrop={<Text testID="my-backdrop">x</Text>}>
         <Text>hello</Text>
       </Modal>,
