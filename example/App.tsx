@@ -12,6 +12,12 @@ import {
   View,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Animated, {
+  FadeInDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -39,54 +45,86 @@ registerAnimation("popOutRotated", {
 });
 
 const palette = {
-  bg: "#0e0e10",
+  bg: "#0A0A0F",
+  surface: "#141419",
+  surfaceBorder: "rgba(255,255,255,0.07)",
   card: "#ffffff",
   text: "#111111",
   muted: "#6b6b76",
   border: "#e6e6ea",
-  accent: "#7c5cff",
+  accent: "#7C5CFF",
+  accentSoft: "rgba(124,92,255,0.16)",
   destructive: "#e64545",
 };
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const Divider: React.FC = () => <View style={styles.divider} />;
 
 const Section: React.FC<{
   title: string;
   caption?: string;
+  icon?: string;
+  index?: number;
   children: React.ReactNode;
-}> = ({ title, caption, children }) => (
-  <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
-    {caption ? <Text style={styles.sectionCaption}>{caption}</Text> : null}
-    {children}
-  </View>
+}> = ({ title, caption, icon, index = 0, children }) => (
+  <Animated.View
+    entering={FadeInDown.delay(80 + index * 70).springify()}
+    style={styles.section}
+  >
+    <View style={styles.sectionHeader}>
+      {icon ? (
+        <View style={styles.sectionIcon}>
+          <Text style={styles.sectionIconText}>{icon}</Text>
+        </View>
+      ) : null}
+      <View style={styles.sectionHeaderText}>
+        <Text style={styles.sectionTitle}>{title}</Text>
+        {caption ? <Text style={styles.sectionCaption}>{caption}</Text> : null}
+      </View>
+    </View>
+    <View style={styles.sectionBody}>{children}</View>
+  </Animated.View>
 );
 
 const Btn: React.FC<{
   label: string;
   onPress: () => void;
   tone?: "primary" | "secondary" | "destructive" | "ghost";
-}> = ({ label, onPress, tone = "primary" }) => (
-  <Pressable
-    style={[
-      styles.button,
-      tone === "secondary" && styles.buttonSecondary,
-      tone === "destructive" && styles.buttonDestructive,
-      tone === "ghost" && styles.buttonGhost,
-    ]}
-    onPress={onPress}
-  >
-    <Text
+}> = ({ label, onPress, tone = "primary" }) => {
+  const scale = useSharedValue(1);
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+  return (
+    <AnimatedPressable
       style={[
-        styles.buttonText,
-        tone === "secondary" && styles.buttonTextSecondary,
-        tone === "ghost" && styles.buttonTextGhost,
+        styles.button,
+        tone === "secondary" && styles.buttonSecondary,
+        tone === "destructive" && styles.buttonDestructive,
+        tone === "ghost" && styles.buttonGhost,
+        animatedStyle,
       ]}
+      onPressIn={() => {
+        scale.set(withSpring(0.96, { damping: 18, stiffness: 500 }));
+      }}
+      onPressOut={() => {
+        scale.set(withSpring(1, { damping: 18, stiffness: 500 }));
+      }}
+      onPress={onPress}
     >
-      {label}
-    </Text>
-  </Pressable>
-);
+      <Text
+        style={[
+          styles.buttonText,
+          tone === "secondary" && styles.buttonTextSecondary,
+          tone === "ghost" && styles.buttonTextGhost,
+        ]}
+      >
+        {label}
+      </Text>
+    </AnimatedPressable>
+  );
+};
 
 const SheetHandle = () => <View style={styles.handle} />;
 
@@ -520,12 +558,18 @@ const Demo: React.FC = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.heading}>react-native-modalkit</Text>
-      <Text style={styles.subheading}>
-        Reanimated-first drop-in replacement for react-native-modal.
-      </Text>
+      <Animated.View entering={FadeInDown.springify()} style={styles.hero}>
+        <View style={styles.heroPill}>
+          <Text style={styles.heroPillText}>UI-THREAD · REANIMATED 4</Text>
+        </View>
+        <Text style={styles.heading}>modalkit</Text>
+        <Text style={styles.subheading}>
+          Drop-in replacement for react-native-modal — same props, running on
+          the UI thread. Sheets, dialogs, stacks, and an imperative API.
+        </Text>
+      </Animated.View>
 
-      <Section title="Sheets" caption="Bottom-anchored, swipe-to-dismiss.">
+      <Section icon="📄" index={0} title="Sheets" caption="Bottom-anchored, swipe-to-dismiss.">
         <Btn label="Sign in" onPress={() => setSignIn(true)} />
         <View style={styles.spacer} />
         <Btn
@@ -543,11 +587,13 @@ const Demo: React.FC = () => {
         <Btn label="Share" tone="secondary" onPress={() => setShare(true)} />
       </Section>
 
-      <Section title="Fullscreen" caption="With a blurred backdrop.">
+      <Section icon="🖼️" index={1} title="Fullscreen" caption="With a blurred backdrop.">
         <Btn label="Open image preview" onPress={() => setLightbox(true)} />
       </Section>
 
       <Section
+        icon="💬"
+        index={2}
         title="Dialogs"
         caption="Centered cards with timing or spring entries."
       >
@@ -577,7 +623,7 @@ const Demo: React.FC = () => {
         />
       </Section>
 
-      <Section title="Architectural">
+      <Section icon="🏗️" index={3} title="Architectural" caption="Stacked sheets, refs, and the global manager.">
         <Btn
           label="Profile (stacked sheets)"
           onPress={() => setProfile(true)}
@@ -621,7 +667,7 @@ const Demo: React.FC = () => {
         />
       </Section>
 
-      <Section title="Settings">
+      <Section icon="⚙️" index={4} title="Settings">
         <View style={styles.toggleRow}>
           <Text style={styles.toggleLabel}>Respect reduced motion</Text>
           <Switch value={respectMotion} onValueChange={setRespectMotion} />
@@ -698,34 +744,76 @@ export default function App() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: palette.bg },
   container: {
-    paddingTop: 80,
-    paddingHorizontal: 24,
+    paddingTop: 76,
+    paddingHorizontal: 20,
     paddingBottom: 96,
-    gap: 28,
+    gap: 16,
+  },
+  hero: {
+    gap: 10,
+    marginBottom: 12,
+    paddingHorizontal: 4,
+  },
+  heroPill: {
+    alignSelf: "flex-start",
+    backgroundColor: palette.accentSoft,
+    borderColor: "rgba(124,92,255,0.35)",
+    borderWidth: 1,
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
+  heroPillText: {
+    color: "#B9A6FF",
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 1.2,
   },
   heading: {
     color: "#fff",
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: "800",
-    letterSpacing: -0.5,
+    letterSpacing: -1,
   },
   subheading: {
-    color: "rgba(255,255,255,0.65)",
+    color: "rgba(255,255,255,0.6)",
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 21,
   },
-  section: { gap: 8 },
+  section: {
+    backgroundColor: palette.surface,
+    borderColor: palette.surfaceBorder,
+    borderWidth: 1,
+    borderRadius: 24,
+    padding: 18,
+    gap: 14,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  sectionHeaderText: { flex: 1, gap: 2 },
+  sectionIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 13,
+    backgroundColor: palette.accentSoft,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sectionIconText: { fontSize: 18 },
+  sectionBody: { gap: 10 },
   sectionTitle: {
-    color: "rgba(255,255,255,0.85)",
-    fontSize: 12,
-    textTransform: "uppercase",
-    letterSpacing: 1,
+    color: "rgba(255,255,255,0.92)",
+    fontSize: 16,
+    letterSpacing: 0.2,
     fontWeight: "700",
   },
   sectionCaption: {
-    color: "rgba(255,255,255,0.55)",
-    fontSize: 13,
-    marginBottom: 6,
+    color: "rgba(255,255,255,0.5)",
+    fontSize: 12.5,
+    lineHeight: 17,
   },
   spacer: { height: 10 },
   spacerL: { height: 18 },
@@ -755,19 +843,26 @@ const styles = StyleSheet.create({
     backgroundColor: palette.accent,
     paddingVertical: 14,
     paddingHorizontal: 18,
-    borderRadius: 12,
+    borderRadius: 14,
     alignItems: "center",
+    shadowColor: palette.accent,
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
   },
   buttonSecondary: {
     backgroundColor: "#f3f3f6",
+    shadowOpacity: 0,
   },
   buttonDestructive: {
     backgroundColor: palette.destructive,
+    shadowColor: palette.destructive,
   },
   buttonGhost: {
     backgroundColor: "transparent",
     borderWidth: 1,
     borderColor: palette.border,
+    shadowOpacity: 0,
   },
   buttonText: { color: "#fff", fontWeight: "700", fontSize: 16 },
   buttonTextSecondary: { color: palette.text },
