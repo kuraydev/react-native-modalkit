@@ -1,6 +1,5 @@
 const path = require("path");
 const { getDefaultConfig } = require("expo/metro-config");
-const exclusionList = require("metro-config/src/defaults/exclusionList");
 const pak = require("../package.json");
 
 const projectRoot = __dirname;
@@ -21,14 +20,12 @@ const config = getDefaultConfig(projectRoot);
 config.watchFolders = [workspaceRoot];
 
 // Block the parent's copies of peer deps — force the example to use its own.
-config.resolver.blockList = exclusionList(
-  sharedPeers.map(
-    (name) =>
-      new RegExp(
-        `^${escapeForRegex(path.join(workspaceRoot, "node_modules", name))}\\/.*$`,
-      ),
-  ),
-);
+// Block the parent's ENTIRE node_modules — the example must never load a
+// second copy of metro, react, or any peer from the workspace root.
+config.resolver.blockList = [
+  new RegExp(`^${escapeForRegex(path.join(workspaceRoot, "node_modules"))}\\/.*$`),
+];
+config.resolver.nodeModulesPaths = [path.join(projectRoot, "node_modules")];
 
 config.resolver.extraNodeModules = sharedPeers.reduce((acc, name) => {
   acc[name] = path.join(projectRoot, "node_modules", name);
