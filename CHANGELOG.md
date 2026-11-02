@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-02
+
+### Added
+
+- `navigationBarTranslucent` prop, forwarded to the native modal. It defaults
+  to `statusBarTranslucent`, so translucent modals draw edge to edge on Android.
+
+### Fixed
+
+- **Android translucent modals left strips uncovered.** The dialog kept the
+  display cutout and navigation bar insets, and the backdrop was sized from the
+  window, which leaves out the navigation bar. Translucent Android modals now go
+  edge to edge and size themselves from the screen.
+
+### Changed
+
+- On Android, a modal that sets `statusBarTranslucent` now also draws under the
+  navigation bar and takes its size from the screen. Pass
+  `navigationBarTranslucent={false}` to keep the navigation bar inset; the size
+  still comes from the screen.
+
+## [0.2.0] - 2026-08-16
+
 ### Added
 
 - `ReanimatedAnimationConfig` now accepts an optional `preset` field so you
@@ -18,15 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `position="center"` and `position="top"` now ship with
   `paddingHorizontal: 16` so dialogs don't reach the screen edges. Bottom
   sheets and fullscreen modals stay edge-to-edge.
-- `navigationBarTranslucent` prop, forwarded to the native modal. It defaults
-  to `statusBarTranslucent`, so translucent modals draw edge to edge on Android.
 
 ### Fixed
-
-- **Android translucent modals left strips uncovered.** The dialog kept the
-  display cutout and navigation bar insets, and the backdrop was sized from the
-  window, which leaves out the navigation bar. Translucent Android modals now go
-  edge to edge and size themselves from the screen.
 
 - **Touch-system lockup after closing a modal.** `<RNModal>` is now mounted
   only while the modal is in use and torn down via `onDismiss` (with a
@@ -108,5 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   stacked modals, blur backdrop, keyboard-avoiding form, custom registered
   animation, promise-based confirm, reduced-motion toggle).
 
-[Unreleased]: https://github.com/kuraydev/react-native-modalkit/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/kuraydev/react-native-modalkit/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/kuraydev/react-native-modalkit/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/kuraydev/react-native-modalkit/compare/0.1.0...v0.2.0
 [0.1.0]: https://github.com/kuraydev/react-native-modalkit/releases/tag/v0.1.0
