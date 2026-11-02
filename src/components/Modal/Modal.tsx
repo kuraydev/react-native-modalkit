@@ -95,6 +95,7 @@ export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(props, r
     deviceHeight,
     avoidKeyboard,
     statusBarTranslucent,
+    navigationBarTranslucent,
     supportedOrientations,
     presentationStyle,
     hardwareAccelerated,
@@ -126,7 +127,11 @@ export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(props, r
   }
 
   /* --------------------------- dimensions / motion --------------------------- */
-  const { width, height } = useDeviceDimensions(deviceWidth, deviceHeight);
+  const { width, height } = useDeviceDimensions(
+    deviceWidth,
+    deviceHeight,
+    Platform.OS === "android" && !!statusBarTranslucent,
+  );
   const reduceMotion = useReducedMotion(respectReducedMotion);
 
   /* --------------------------- resolved animations --------------------------- */
@@ -502,6 +507,7 @@ export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(props, r
       presentationStyle={presentationStyle}
       hardwareAccelerated={hardwareAccelerated}
       statusBarTranslucent={statusBarTranslucent}
+      navigationBarTranslucent={navigationBarTranslucent ?? statusBarTranslucent}
       onOrientationChange={onOrientationChange}
       testID={modalTestID}
     >
