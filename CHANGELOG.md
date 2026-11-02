@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-02
+
+### Fixed
+
+- **Android modals with an opaque navigation bar were sized too large.** A modal
+  with `statusBarTranslucent` and `navigationBarTranslucent={false}` keeps the
+  navigation bar inset, but took its size from the screen, so content pinned to
+  the bottom could sit behind the bar. It now uses the window size.
+
 ## [0.3.0] - 2026-11-02
 
 ### Added
@@ -124,7 +133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   stacked modals, blur backdrop, keyboard-avoiding form, custom registered
   animation, promise-based confirm, reduced-motion toggle).
 
-[Unreleased]: https://github.com/kuraydev/react-native-modalkit/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/kuraydev/react-native-modalkit/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/kuraydev/react-native-modalkit/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/kuraydev/react-native-modalkit/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/kuraydev/react-native-modalkit/compare/0.1.0...v0.2.0
 [0.1.0]: https://github.com/kuraydev/react-native-modalkit/releases/tag/v0.1.0
