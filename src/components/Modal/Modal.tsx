@@ -130,7 +130,7 @@ export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(props, r
   const { width, height } = useDeviceDimensions(
     deviceWidth,
     deviceHeight,
-    Platform.OS === "android" && !!statusBarTranslucent,
+    Platform.OS === "android" && !!statusBarTranslucent && navigationBarTranslucent !== false,
   );
   const reduceMotion = useReducedMotion(respectReducedMotion);
 

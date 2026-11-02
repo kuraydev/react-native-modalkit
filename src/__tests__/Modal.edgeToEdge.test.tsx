@@ -57,6 +57,16 @@ describe("Modal — edge to edge", () => {
     expect(backdropSize(getByTestId as never)).toEqual({ width: 880, height: 400 });
   });
 
+  it("keeps the window size when the navigation bar stays opaque", async () => {
+    setOS("android");
+    const { getByTestId } = await render(
+      <Modal isVisible statusBarTranslucent navigationBarTranslucent={false}>
+        <Text>hello</Text>
+      </Modal>,
+    );
+    expect(backdropSize(getByTestId as never)).toEqual({ width: 800, height: 360 });
+  });
+
   it("keeps the window size for opaque Android modals and on iOS", async () => {
     setOS("android");
     const opaque = await render(
