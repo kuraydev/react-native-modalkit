@@ -163,6 +163,7 @@ export type ModalProps = ViewProps & {
   deviceHeight?: OrNull<number>;
   avoidKeyboard?: boolean;
   statusBarTranslucent?: boolean;
+  navigationBarTranslucent?: boolean;
   supportedOrientations?: Orientation[];
   presentationStyle?: PresentationStyle;
   hardwareAccelerated?: boolean;

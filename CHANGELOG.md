@@ -18,8 +18,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `position="center"` and `position="top"` now ship with
   `paddingHorizontal: 16` so dialogs don't reach the screen edges. Bottom
   sheets and fullscreen modals stay edge-to-edge.
+- `navigationBarTranslucent` prop, forwarded to the native modal. It defaults
+  to `statusBarTranslucent`, so translucent modals draw edge to edge on Android.
 
 ### Fixed
+
+- **Android translucent modals left strips uncovered.** The dialog kept the
+  display cutout and navigation bar insets, and the backdrop was sized from the
+  window, which leaves out the navigation bar. Translucent Android modals now go
+  edge to edge and size themselves from the screen.
 
 - **Touch-system lockup after closing a modal.** `<RNModal>` is now mounted
   only while the modal is in use and torn down via `onDismiss` (with a
